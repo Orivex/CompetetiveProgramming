@@ -11,31 +11,30 @@ int32_t main(){
     int n;
     cin >> n;
 
-    vector<int> ids;
-    vector<int> prefix;
-    ids.push_back(0);
-    prefix.push_back(0);
-
-    int ans = 0;
-    for (int i = 1; i <= n; i++)
+    vector<int> prefix(n+1, 0);
+    for (int i = 1; i < n; i++)
     {
         int id;
         cin >> id;
-        ids.push_back(id);
-        prefix.push_back(prefix[i-1] + id);
-        int value = prefix[i];
-        for (int j = 0; j < i; j++)
-        {
-            value -= ids[j];
-
-            if(value < 7)
-                break;
-
-            if(value % 7 == 0) 
-                ans = max(ans, i-j);
-        }
-        
+        prefix[i] = (prefix[i-1] + id) % 7;
     }
+
+    vector<int> firstoccurence(7);
+    for (int i = 0; i < 7; i++)
+    {
+        firstoccurence[i] = -1;
+    }
+    
+    int ans = 0;
+
+    for (int i = 0; i < n; i++)
+    {
+        if(firstoccurence[prefix[i]] == -1)
+            firstoccurence[prefix[i]] = i;
+        else 
+            ans = max(ans, i - firstoccurence[prefix[i]]);
+    }
+    
 
     cout << ans << endl;
 

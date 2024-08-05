@@ -23,18 +23,17 @@ int main() {
         string cow1, cow2, t;
 
         cin >> cow1;
-        cin >> t >> t >> t >> t;
+        cin >> t >> t >> t >> t; //Buttercup must be milked beside Bella
         cin >> cow2;
 
-        int i1 = find(cow, cow+8, cow1) - cow;
-        int i2 = find(cow, cow+8, cow2) - cow;
+        int idx1 = find(cow, cow+8, cow1) - cow;
+        int idx2 = find(cow, cow+8, cow2) - cow;
 
-        constraints.push_back({i1, i2});
+        constraints.push_back({idx1, idx2});
     }
     
 
     solve(constraints, vector<int>({0, 1, 2, 3, 4, 5, 6, 7}));
-    
     
 }
 
@@ -42,10 +41,10 @@ void solve(vector<pair<int, int>> constraints, vector<int> permutation) {
     
     for (int i = 0; i < constraints.size(); i++)
     {
-        int i1 = find(permutation.begin(), permutation.end(), constraints[i].first) - permutation.begin();
-        int i2 = find(permutation.begin(), permutation.end(), constraints[i].second) - permutation.begin();
+        int idx1 = find(permutation.begin(), permutation.end(), constraints[i].first) - permutation.begin();
+        int idx2 = find(permutation.begin(), permutation.end(), constraints[i].second) - permutation.begin();
 
-        if(abs(i1-i2) > 1) {
+        if(abs(idx1-idx2) > 1) {
             next_permutation(permutation.begin(), permutation.end());
             solve(constraints, permutation);
             return;

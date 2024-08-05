@@ -4,9 +4,6 @@ using namespace std;
 
 int main() {
 
-    ios_base::sync_with_stdio(0); 
-    cin.tie(0);
-
     freopen("shuffle.in","r",stdin); 
 	freopen("shuffle.out","w",stdout); 
 
@@ -20,11 +17,11 @@ int main() {
         cin >> shuffle[i];
     }
 
-    vector<string> cows(n);
+    vector<string> id(n);
 
     for (int i = 0; i < n; i++)
     {
-        cin >> cows[i];
+        cin >> id[i];
     }
 
     vector<string> beforeShuffle(n);
@@ -33,16 +30,17 @@ int main() {
     {
         for (int j = 0; j < n; j++)
         {
-            beforeShuffle[j] = cows[shuffle[j]-1]; 
+            beforeShuffle[j] = id[shuffle[j]-1]; //beforeShuffle[2] = id[shuffle[2]-1] -> id[4-1] -> id[3] -> 4;
         }
 
-        cows = beforeShuffle;
+        id = beforeShuffle;
     }
 
     for (int i = 0; i < n; i++)
     {
-        cout << cows[i] << endl;
+        cout << id[i] << endl;
     }
     
 
 }
+
