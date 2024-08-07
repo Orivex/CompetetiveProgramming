@@ -10,34 +10,41 @@ int main() {
     int n;
     cin >> n;
 
-    int low = -1e9;
-    int upper = 1e9;
-    int liars = 0;
+    vector<pair<int, char>> v;
     for (int i = 0; i < n; i++)
     {
         char a;
         int b;
         cin >> a >> b;
 
-        if(a == 'G') {
-            if(b > low && b < upper)
-                low = b;
+        v.push_back({b, a});
 
-            if(b > upper)
-                liars++;
-        }
-        else if(a == 'L') {
-            if(b < upper && b > low)
-                upper = b;
-
-            if(b < low)
-                liars++;
-        }
-
-        
     }
 
-    cout << liars << endl;
+    sort(v.begin(), v.end());
+
+    int minLiars = n;
+
+    for (int i = 0; i < n; i++)
+    {
+        int currLiars = 0;
+        for (int j = 0; j < i; j++)
+        {
+            if(v[j].second == 'L')
+                currLiars++;
+        }
+
+        for (int j = i+1; j < n; j++)
+        {
+            if(v[j].second == 'G')
+                currLiars++;
+        }
+
+        minLiars = min(minLiars, currLiars);
+        
+    }
+    
+    cout << minLiars << endl;
     
 
 }
