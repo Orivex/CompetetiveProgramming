@@ -2,13 +2,15 @@
 
 using namespace std;
 
-int main() {
+#define int long long int
+
+int32_t main() {
 
     ios_base::sync_with_stdio(0); 
     cin.tie(0);
 
-    freopen("dsfan.in","r",stdin); 
-	freopen("dsfan.out","w",stdout); 
+    //freopen("dsfan.in","r",stdin); 
+	//freopen("dsfan.out","w",stdout); 
 
     int t;
     cin >> t;
@@ -20,6 +22,7 @@ int main() {
 
         vector<int> a(n+1);
         vector<int> prefix(n+1);
+        prefix[0] = 0;
         int xor0 = 0;
         int xor1 = 0;
 
@@ -64,9 +67,10 @@ int main() {
             }
         }
 
-        cout << endl;
-        
+        cout << endl;   
         
     }
+
+    return 0;
 
 }
