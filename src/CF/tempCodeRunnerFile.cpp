@@ -1,72 +1,94 @@
-#include <bits/stdc++.h>
+    #include <bits/stdc++.h>
 
-using namespace std;
+    using namespace std;
 
-int main() {
+    int n, m;
+    vector<int> c;
+    vector<int> t;
 
-    ios_base::sync_with_stdio(0); 
-    cin.tie(0);
+    bool check(int r) {
 
-    freopen("dsfan.in","r",stdin); 
-	freopen("dsfan.out","w",stdout); 
+        int i = 0;
+        int j = 0;
 
-    int t;
-    cin >> t;
-    
-    for (int i = 0; i < t; i++)
-    {
-        int n;
-        cin >> n;
+        while(i < m) {
+            while(t[i] > c[j]) {
+                if( c[j] < (t[i]-r) ) {
+                                    return false;
+                }
 
-        vector<int> a(n+1);
-        vector<int> prefix(n+1);
-        int xor0 = 0;
-        int xor1 = 0;
-
-        for (int j = 1; j <= n; j++){
-            cin >> a[j];
-            prefix[j] = prefix[j-1] ^ a[j];
-        }
-        
-        string s;
-        cin >> s;
-        for (int j = 1; j <= n; j++){
-            if(s[j-1] == '1')   
-                xor1 ^= a[j];
-            else
-                xor0 ^= a[j];
-        }
-
-        int q;
-        cin >> q;
-
-        for (int j = 0; j < q; j++)
-        {
-            int tp;
-            cin >> tp;
-
-            if(tp == 1) {
-                int l, r;
-                cin >> l >> r;
-
-                int nextXor = prefix[r] ^ prefix[l-1];
-                xor0 ^= nextXor;
-                xor1 ^= nextXor;
+                j++;
             }
-            else {
-                int bit;
-                cin >> bit;
 
-                if(bit == 0)
-                    cout << xor0 << " ";
-                else 
-                    cout << xor1 << " ";
+            bool covered = true;
+            while(t[i] < c[j] && j < n) {
+                if( c[j] > (t[i]+r) ) {
+                    covered = false;
+                    break;
+                }
+
+                j++;
             }
+
+            i++;
+
+            if(i == m && covered == false)
+                return false;
         }
 
-        cout << endl;
-        
-        
+        return true;
+
     }
 
-}
+    int main() {
+
+        ios_base::sync_with_stdio(0); 
+        cin.tie(0);
+
+        //freopen("clnetwork.in","r",stdin); 
+        //freopen("clnetwork.out","w",stdout); 
+
+        cin >> n >> m;
+
+        c.resize(n);
+        t.resize(m);
+
+        int minC = INT_MAX, maxC = -INT_MAX;
+        for (int i = 0; i < n; i++)
+        {
+            int val;
+            cin >> val;
+            c[i] = val;
+            minC = min(minC, val);
+            maxC = max(maxC, val);
+        }
+        
+
+        int minT = INT_MAX, maxT = -INT_MAX;
+        for (int i = 0; i < m; i++)
+        {
+            int val;
+            cin >> val;
+            t[i] = val;
+            minT = min(minT, val);
+            maxT = max(maxT, val);
+        }
+
+        int maxR = max(maxC-minT, maxT-minC);
+
+        int high = maxR, low = 0;
+
+        while(low < high) {
+            int mid = low + (high - low) / 2;
+
+            if(check(mid)) {
+                high = mid;
+            }
+            else
+                low = mid+1;
+        }
+
+        cout << low << endl;
+
+
+    }

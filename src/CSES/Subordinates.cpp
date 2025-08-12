@@ -7,7 +7,7 @@ using namespace std;
 int getSubordinates(int current);
 
 int n;
-vector<vector<int>> tree;
+vector<vector<int>> parent;
 vector<int> solution;
 
 
@@ -18,14 +18,14 @@ int main() {
 
     cin >> n;
 
-    tree.resize(n);
+    parent.resize(n);
     solution.resize(n);
 
     for (int i = 1; i < n; i++)
     {
         int boss;
         cin >> boss;
-        tree[boss-1].push_back(i);
+        parent[boss-1].push_back(i);
     }
 
     getSubordinates(0);
@@ -37,15 +37,15 @@ int main() {
 
 
 int getSubordinates(int current) {
-    if(tree[current].empty()) {
+    if(parent[current].empty()) {
         solution[current] = 0;
         return 1;
     }
 
     int mySubordinates = 0;
-    for (int i = 0; i < tree[current].size(); i++)
+    for (int i = 0; i < parent[current].size(); i++)
     {
-        mySubordinates += getSubordinates(tree[current][i]);
+        mySubordinates += getSubordinates(parent[current][i]);
     }
 
     solution[current] = mySubordinates;
